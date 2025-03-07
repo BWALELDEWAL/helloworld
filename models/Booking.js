@@ -21,3 +21,17 @@ const bookingSchema = new mongoose.Schema({
         required: true, 
         min: 0 
     },
+    status: { 
+        type: String, 
+        enum: ['pending', 'confirmed', 'canceled'], 
+        default: 'pending' 
+    },
+    createdAt: { 
+        type: Date, 
+        default: Date.now 
+    }
+});
+
+const Booking = mongoose.model('Booking', bookingSchema);
+
+module.exports = Booking;
