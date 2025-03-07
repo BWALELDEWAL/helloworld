@@ -1,13 +1,11 @@
-# helloworld
-<html>
-  <head>
-  </head>
-  <body>
-    <div>
-      hello world dddddd...
-    </div>
-  </body> 
-</html>
+Event Management System
 
-hocus pocus ur girl is in my focus
-d=46
+Overview
+
+This system allows users to create, manage, and book event tickets. It features three main schemas:
+
+User Schema: Manages user authentication and roles (Standard User, Organizer, Admin).
+
+Event Schema: Stores event details, ticket availability, and organizer info.
+
+Booking Schema: Records ticket bookings, linking users to events with statuses (Pending, Confirmed, Canceled).
