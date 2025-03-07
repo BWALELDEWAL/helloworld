@@ -11,3 +11,13 @@ const bookingSchema = new mongoose.Schema({
         ref: 'Event', 
         required: true 
     },
+    numTickets: { 
+        type: Number, 
+        required: true, 
+        min: 1 
+    },
+    totalPrice: { 
+        type: Number, 
+        required: true, 
+        min: 0 
+    },
