@@ -25,7 +25,7 @@ const EventSchema = new mongoose.Schema(
       enum: ['Music', 'Sports', 'Conference', 'Workshop', 'Theater', 'Other'],
     },
     image: {
-      type: String, // URL to the event image
+      type: String, 
       required: false,
     },
     ticketPricing: {
@@ -50,7 +50,7 @@ const EventSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    timestamps: true, 
   }
 );
 
