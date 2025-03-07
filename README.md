@@ -1,11 +1,9 @@
-Event Management System
+Overview:
 
-Overview
+This system allows users to create, manage, and book event tickets. It features three main schemas...
 
-This system allows users to create, manage, and book event tickets. It features three main schemas:
+-User Schema: Manages user authentication and roles (Standard User, Organizer, Admin).
 
-User Schema: Manages user authentication and roles (Standard User, Organizer, Admin).
+-Event Schema: Stores event details, ticket availability, and organizer info.
 
-Event Schema: Stores event details, ticket availability, and organizer info.
-
-Booking Schema: Records ticket bookings, linking users to events with statuses (Pending, Confirmed, Canceled).
+-Booking Schema: Records ticket bookings, linking users to events with statuses (Pending, Confirmed, Canceled).
