@@ -1,2 +1,3 @@
 ignore this
-
+.env
+node_modules/
