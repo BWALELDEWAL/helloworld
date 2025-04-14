@@ -108,7 +108,41 @@ exports.loginUser = async (req, res, next) => {
     next(error);
   }
 };
+// @desc    Update user password (forgot password)
+// @route   PUT /api/v1/forgetPassword
+exports.forgetPassword = async (req, res, next) => {
+  try {
+    const { email, newPassword } = req.body;
 
+    // Validate input
+    if (!email || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email and new password are required',
+      });
+    }
+
+    // Find the user
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found with that email',
+      });
+    }
+
+    // Hash the new password and update
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Password updated successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 // @desc    Get current user profile
 // @route   GET /api/v1/users/profile
 exports.getProfile = async (req, res, next) => {
