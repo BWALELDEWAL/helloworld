@@ -1,4 +1,3 @@
-// In routes/userRoutes.js
 const express = require('express');
 const router = express.Router({ caseSensitive: true }); // Explicit Express 4 router
 const userController = require('../controllers/userController');
