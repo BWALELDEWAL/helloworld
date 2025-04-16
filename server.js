@@ -22,6 +22,10 @@ connectDB();
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/v1', userRoutes); // More explicit path
 
+const bookingRoutes = require("./routes/bookingRoutes");
+app.use(bookingRoutes);
+
+
 // --- Health Check ---
 app.get('/', (req, res) => res.status(200).json({ 
   status: 'UP', 
