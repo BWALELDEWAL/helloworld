@@ -19,7 +19,7 @@ exports.bookTickets = async (req, res) => {
     if (event.remainingTickets < numTickets) {
       return res.status(400).json({ message: "Not enough tickets available" });
     }
-
+    //change
     const totalPrice = numTickets * event.ticketPricing;
 
     const booking = new Booking({
