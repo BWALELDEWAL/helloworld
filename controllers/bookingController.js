@@ -4,7 +4,7 @@ const Event = require("../models/event");
 // Book tickets
 exports.bookTickets = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.userid;
     const { eventId, numTickets } = req.body;
 
     if (!eventId || !numTickets) {
@@ -64,7 +64,7 @@ exports.cancelBooking = async (req, res) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    if (booking.user.toString() !== req.user.id) {
+    if (booking.user.toString() !== req.user.userid) {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
