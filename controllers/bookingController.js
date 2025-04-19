@@ -20,7 +20,7 @@ exports.bookTickets = async (req, res) => {
       return res.status(400).json({ message: "Not enough tickets available" });
     }
 
-    const totalPrice = numTickets * event.ticketPricing;;
+    const totalPrice = numTickets * event.ticketPricing;
 
     const booking = new Booking({
       user: userId,
