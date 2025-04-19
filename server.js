@@ -10,9 +10,9 @@ app.use(express.json());
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.DB_URL);
-    console.log('✅ MongoDB connected');
+    console.log(' MongoDB connected');
   } catch (err) {
-    console.error('❌ DB connection error:', err.message);
+    console.error(' DB connection error:', err.message);
     process.exit(1);
   }
 };
@@ -36,7 +36,7 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 app.use((err, req, res, next) => {
-  console.error('❌ Server error:', err.stack);
+  console.error(' Server error:', err.stack);
   res.status(500).json({ error: 'Internal server error' });
 });
 

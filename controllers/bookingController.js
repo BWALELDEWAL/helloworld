@@ -16,7 +16,7 @@ exports.bookTickets = async (req, res) => {
       return res.status(404).json({ message: "Event not found" });
     }
 
-    if (event.availableTickets < numTickets) {
+    if (event.remainingTickets < numTickets) {
       return res.status(400).json({ message: "Not enough tickets available" });
     }
 
@@ -33,12 +33,12 @@ exports.bookTickets = async (req, res) => {
     await booking.save();
 
     // Reduce available tickets
-    event.availableTickets -= numTickets;
+    event.remainingTickets -= numTickets;
     await event.save();
 
     res.status(201).json({ message: "Booking successful", booking });
   } catch (err) {
-    console.error("❌ Booking error:", err);
+    console.error(" Booking error:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -75,7 +75,7 @@ exports.cancelBooking = async (req, res) => {
     // Increase available tickets back
     const event = await Event.findById(booking.event);
     if (event) {
-      event.availableTickets += booking.numTickets;
+      event.remainingTickets += booking.numTickets;
       await event.save();
     }
 
