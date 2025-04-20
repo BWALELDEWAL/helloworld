@@ -12,6 +12,11 @@ router.put('/forgetPassword', userController.forgetPassword);
 router.get('/users/profile', authenticate, userController.getProfile);
 router.put('/users/profile', authenticate, userController.updateProfile);
 
+//Mohamed routes 
+router.get('/users/events', authenticate,authorizeRole(['Organizer']), userController.getUserEvents);
+router.get('/users/bookings', authenticate,authorizeRole(['User']), userController.getUserBookings);
+router.get('/users/events/analytics', authenticate, authorizeRole(['Organizer']), userController.getUserEventAnalytics);
+
 // Admin routes
 router.get('/users', authenticate, authorizeRole(['Admin']), userController.getAllUsers);
 router.get('/users/:id', authenticate, authorizeRole(['Admin']), userController.getUser);
