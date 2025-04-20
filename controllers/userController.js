@@ -228,3 +228,50 @@ exports.deleteUser = async (req, res, next) => {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+// Get current user's bookings
+exports.getUserBookings = async (req, res, next) => {
+  try {
+    const bookings = await Booking.find({ user: req.user.userId });
+    res.json({
+      success: true,
+      bookings,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get current user's events (for EventOrganizers)
+exports.getUserEvents = async (req, res, next) => {
+    try{ 
+    const events = await Event.find({ organizer: req.user.userId });
+    res.json({
+      success: true,
+      events,
+    });
+  }catch (error) {
+    next(error);
+  }
+  };  
+
+exports.getUserEventAnalytics = async (req, res, next) => {
+  try {
+    const events = await Event.find({ organizer: req.user.userId });
+    const analytics = events.map((event) => {
+      const ticketsBookedPercentage = ((event.totalTickets - event.remainingTickets) / event.totalTickets) * 100;
+      return {
+        eventId: event._id,
+        eventTitle: event.title,
+        ticketsBookedPercentage: ticketsBookedPercentage.toFixed(2), // Round to 2 decimal places
+        remainingTickets: event.remainingTickets,
+        totalTickets: event.totalTickets,
+      };
+    });
+    res.json({
+      success: true,
+      analytics,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
