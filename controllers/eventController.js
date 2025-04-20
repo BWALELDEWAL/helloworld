@@ -99,3 +99,65 @@ exports.updateEvent = async (req, res, next) => {
     next(error);
   }
 };
+
+///////////////////////////////////////////
+
+exports.getApprovedEvents = async (req, res, next) => {
+  try {
+    const events = await Event.find({ status: 'approved' });
+    res.json({ success: true, count: events.length, events });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getEvent = async (req, res, next) => {
+  try {
+    if (req.params.id === 'all') {
+      const events = await Event.find({});
+      return res.json({
+        success: true,
+        count: events.length,
+        events
+      });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid event ID format'
+      });
+    }
+
+    const event = await Event.findById(req.params.id);
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: 'Event not found'
+      });
+    }
+
+    res.json({ success: true, event });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteEvent = async (req, res, next) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    if (!event) {
+      return res.status(404).json({ success: false, message: 'Event not found' });
+    }
+
+    if (req.user.role !== 'Admin' && event.organizer.toString() !== req.user.userId) {
+      return res.status(403).json({ success: false, message: 'Not authorized' });
+    }
+
+    await event.deleteOne();
+    res.json({ success: true, message: 'Event deleted' });
+  } catch (error) {
+    next(error);
+  }
+};
+//
