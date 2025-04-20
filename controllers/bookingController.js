@@ -1,5 +1,6 @@
 const Booking = require("../models/Booking");
 const Event = require("../models/event");
+const User = require('../models/User'); // adjust the path if needed
 
 // Book tickets
 exports.bookTickets = async (req, res) => {
@@ -15,7 +16,9 @@ exports.bookTickets = async (req, res) => {
     if (!event) {
       return res.status(404).json({ message: "Event not found" });
     }
-
+    if (event.status !== "approved") {
+      return res.status(400).json({ message: "this event is not approved" });
+    }
     if (event.remainingTickets < numTickets) {
       return res.status(400).json({ message: "Not enough tickets available" });
     }
@@ -49,6 +52,9 @@ exports.getBookingById = async (req, res) => {
     const booking = await Booking.findById(req.params.id).populate("event").populate("user");
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
+    }
+    if (booking.user.toString() !== req.user.userId.toString()) {
+      return res.status(403).json({ message: "You are not authorized to view this booking" });
     }
     res.json(booking);
   } catch (err) {
