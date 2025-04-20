@@ -111,30 +111,30 @@ exports.getApprovedEvents = async (req, res, next) => {
   }
 };
 
+exports.getAllEvents = async (req, res, next) => {
+  try {
+    const events = await Event.find({});
+    return res.json({
+      success: true,
+      count: events.length,
+      events
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getEvent = async (req, res, next) => {
   try {
-    if (req.params.id === 'all') {
-      const events = await Event.find({});
-      return res.json({
-        success: true,
-        count: events.length,
-        events
-      });
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: 'Invalid event ID format' });
     }
 
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid event ID format'
-      });
-    }
-
-    const event = await Event.findById(req.params.id);
+    const event = await Event.findById(id);
     if (!event) {
-      return res.status(404).json({
-        success: false,
-        message: 'Event not found'
-      });
+      return res.status(404).json({ success: false, message: 'Event not found' });
     }
 
     res.json({ success: true, event });
@@ -142,6 +142,7 @@ exports.getEvent = async (req, res, next) => {
     next(error);
   }
 };
+
 
 exports.deleteEvent = async (req, res, next) => {
   try {

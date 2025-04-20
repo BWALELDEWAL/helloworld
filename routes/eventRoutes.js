@@ -10,13 +10,12 @@ router.post('/events', authenticate, authorizeRole(['Organizer']), eventControll
 router.put('/events/:id', authenticate, authorizeRole(['Organizer', 'Admin']), eventController.updateEvent);
 /////////////////////////////////////////////////////////////
 
+// Admin routes
+router.get('/events/all', authenticate, authorizeRole(['Admin']), eventController.getAllEvents);
 
 // Public routes
 router.get('/events', eventController.getApprovedEvents);
 router.get('/events/:id', eventController.getEvent);
-
-// Admin routes
-router.get('/events/all', authenticate, authorizeRole(['Admin']), eventController.getEvent);
 
 // Organizer or Admin routes
 router.delete('/events/:id', authenticate, authorizeRole(['Organizer', 'Admin']), eventController.deleteEvent);
