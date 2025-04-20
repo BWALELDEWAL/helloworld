@@ -21,6 +21,8 @@ connectDB();
 // Routes
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/v1', userRoutes);
+const eventRoutes = require('./routes/eventRoutes');
+app.use('/api/v1', eventRoutes);
 const bookingRoutes = require('./routes/bookingRoutes');
 app.use('/api/v1', bookingRoutes); 
 
