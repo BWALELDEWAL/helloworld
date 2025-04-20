@@ -48,11 +48,15 @@ const EventSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["approved", "pending", "declined"],
+      default: "pending",
+    },
   },
   {
     timestamps: true, 
   }
 );
 
-const Event = mongoose.model('Event', EventSchema);
-module.exports = Event;
+module.exports = mongoose.model('event', EventSchema);
