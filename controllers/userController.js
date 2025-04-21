@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Event = require('../models/event');
+const Booking = require('../models/Booking');
 
 const generateToken = (userId, role) => {
   return jwt.sign(
