@@ -277,3 +277,10 @@ exports.getUserEventAnalytics = async (req, res, next) => {
     next(error);
   }
 };
+exports.logoutUser = (req, res) => {
+  res.clearCookie('token');
+  res.json({
+    success: true,
+    message: 'Logged out successfully'
+  });
+};
