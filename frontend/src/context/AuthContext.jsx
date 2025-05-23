@@ -15,15 +15,22 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // Try to get current user (if logged in via cookie)
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setUser(null);
+          setLoading(false);
+          return;
+        }
         const res = await axios.get("http://localhost:5000/api/v1/users/profile", {
-          withCredentials: true, 
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
-        setUser(res.data.user); 
+        setUser(res.data.user);
       } catch (err) {
-        setUser(null); 
+        setUser(null);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -35,13 +42,14 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post(
         "http://localhost:5000/api/v1/login",
-        { email, password },
-        { withCredentials: true } // Store cookie
+        { email, password }
       );
-      setUser(res.data.user); // Save user info after login
+      // Save token to localStorage
+      localStorage.setItem("token", res.data.token);
+      setUser(res.data.user);
       return { success: true };
     } catch (error) {
-      setUser(null); // Clear user if login fails
+      setUser(null);
       return {
         success: false,
         message: error.response?.data?.message || "Login failed",

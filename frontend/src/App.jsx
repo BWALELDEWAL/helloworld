@@ -1,10 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import "./App.css"
+import Home from "./pages/EventList";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard"; 
+import UserBookings from "./pages/UserBookings";
+import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
+import EventDetails from "./pages/EventDetails";
+import ForgotPassword from "./pages/ForgotPassword";
+import BookingDetails from "./pages/BookingDetails"; // <-- Import the BookingDetails page
 
 function App() {
   return (
@@ -15,12 +20,31 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* Protected Route */}
+        <Route path="/events/:id" element={<EventDetails />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        {/* Protected Routes */}
         <Route
-          path="/dashboard"
+          path="/bookings"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <UserBookings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/bookings/:bookingId"
+          element={
+            <ProtectedRoute>
+              <BookingDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

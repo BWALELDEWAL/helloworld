@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,49 +11,51 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const res = await login(email, password);
-
     if (res.success) {
-      navigate("/"); // Redirect after login
+      navigate("/");
     } else {
       setError(res.message);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border rounded shadow">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-
-      {error && <div className="text-red-500 mb-2">{error}</div>}
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+    <div className="form-container">
+      <h2 className="form-title">Login</h2>
+      {error && <div className="form-error">{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
           <label>Email:</label>
           <input
             type="email"
-            className="w-full p-2 border rounded"
+            className="form-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete="username"
           />
         </div>
-
-        <div>
+        <div className="form-group">
           <label>Password:</label>
           <input
             type="password"
-            className="w-full p-2 border rounded"
+            className="form-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            autoComplete="current-password"
           />
         </div>
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded">
+        <button type="submit" className="button" style={{ width: "100%", marginTop: 18 }}>
           Login
         </button>
       </form>
-      <p>
+      <div style={{ marginTop: 10 }}>
+        <Link to="/forgot-password" style={{ color: "#1976d2", textDecoration: "underline" }}>
+          Forgot Password?
+        </Link>
+      </div>
+      <p style={{ marginTop: 16 }}>
         Don't have an account? <Link to="/register">Register here</Link>
       </p>
     </div>

@@ -1,34 +1,45 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-function Navbar() {
+const Navbar = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login'); // Redirect to login after logout
-  };
 
   return (
-    <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-      <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
+    <nav className="navbar">
+      {/* Left: Logo */}
+      <div>
+        <Link
+          to="/"
+          style={{
+            fontWeight: 700,
+            fontSize: '1.3rem',
+            letterSpacing: '1px',
+          }}
+        >
+          Eventify
+        </Link>
+      </div>
 
-      {user ? (
-        <>
-          <span style={{ marginRight: '1rem' }}>Hello, {user.name || user.email}</span>
-          <Link to="/dashboard" style={{ marginRight: '1rem' }}>Dashboard</Link>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      ) : (
-        <>
-          <Link to="/login" style={{ marginRight: '1rem' }}>Login</Link>
-          <Link to="/register">Register</Link>
-        </>
-      )}
+      {/* Right: Navigation Links */}
+      <div className="navbar-right">
+        {user ? (
+          <>
+            <span className="user-name">Welcome, {user.name}!</span>
+            <Link to="/profile">Profile</Link>
+            <Link to="/bookings">My Bookings</Link>
+            <button className="button" onClick={logout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
+      </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
