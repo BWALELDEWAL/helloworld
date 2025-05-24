@@ -4,12 +4,11 @@ import Home from "./pages/EventList";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserBookings from "./pages/UserBookings";
-import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import EventDetails from "./pages/EventDetails";
 import ForgotPassword from "./pages/ForgotPassword";
-import BookingDetails from "./pages/BookingDetails"; // <-- Import the BookingDetails page
+import BookingDetails from "./pages/BookingDetails"; 
 
 function App() {
   return (
@@ -37,14 +36,6 @@ function App() {
           element={
             <ProtectedRoute>
               <BookingDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
             </ProtectedRoute>
           }
         />
