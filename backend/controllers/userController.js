@@ -233,7 +233,7 @@ exports.deleteUser = async (req, res, next) => {
 // Get current user's bookings
 exports.getUserBookings = async (req, res, next) => {
   try {
-    const bookings = await Booking.find({ user: req.user.userId });
+    const bookings = await Booking.find({ user: req.user.userId }).populate('event');
     res.json({
       success: true,
       bookings,
@@ -276,4 +276,11 @@ exports.getUserEventAnalytics = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+exports.logoutUser = (req, res) => {
+  res.clearCookie('token');
+  res.json({
+    success: true,
+    message: 'Logged out successfully'
+  });
 };

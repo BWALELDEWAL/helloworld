@@ -49,7 +49,7 @@ exports.bookTickets = async (req, res) => {
 // Get booking by ID
 exports.getBookingById = async (req, res) => {
   try {
-    const booking = await Booking.findById(req.params.id).populate("event").populate("user");
+    const booking = await Booking.findById(req.params.id).populate("event");
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
