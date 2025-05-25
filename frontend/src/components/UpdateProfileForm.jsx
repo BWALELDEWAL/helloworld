@@ -28,7 +28,7 @@ const UpdateProfileForm = ({ user, onCancel }) => {
         "http://localhost:5000/api/v1/users/profile",
         payload,
         {
-          headers: token ? { Authorization: Bearer ${token} } : {},
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
         }
       );
       setMessage("Profile updated successfully!");
