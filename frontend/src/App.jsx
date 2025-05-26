@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+
 import Home from "./pages/EventList";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -15,7 +16,9 @@ import OrganizerDashboard from "./pages/OrganizerDashboard";
 import NewEvent from "./pages/NewEvent";
 import EventAnalyticsPage from "./pages/EventAnalyticsPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
-import AdminEventsPage from "./pages/AdminEventsPage"; // ✅ added
+import AdminEventsPage from "./pages/AdminEventsPage";
+import MyEventsPage from "./pages/MyEventsPage"; // ✅ newly added
+import EventForm from "./components/EventForm";
 
 function App() {
   return (
@@ -63,17 +66,33 @@ function App() {
           }
         />
         <Route
+          path="/my-events"
+          element={
+            <ProtectedRoute roles={["Organizer"]}>
+              <MyEventsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/my-events/new"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute roles={["Organizer"]}>
               <NewEvent />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-events/:id/edit"
+          element={
+            <ProtectedRoute roles={["Organizer"]}>
+              <EventForm />
             </ProtectedRoute>
           }
         />
         <Route
           path="/my-events/analytics"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute roles={["Organizer"]}>
               <EventAnalyticsPage />
             </ProtectedRoute>
           }

@@ -84,4 +84,4 @@ const BookTicketForm = ({ eventId, availableTickets = 1, ticketPrice = 0 }) => {
   );
 };
 
-export default BookTicketForm;
+export default BookTicketForm; 
