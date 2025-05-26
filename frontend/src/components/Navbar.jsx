@@ -26,10 +26,7 @@ const Navbar = () => {
           <>
             <span className="user-name">Welcome, {user.name}!</span>
             <Link to="/profile">Profile</Link>
-            {/* Only show "My Bookings" if NOT Organizer or Admin */}
-            {user.role !== "Organizer" && user.role !== "Admin" && (
-              <Link to="/bookings">My Bookings</Link>
-            )}
+            <Link to="/bookings">My Bookings</Link>
             <button className="button" onClick={logout}>
               Logout
             </button>

@@ -100,6 +100,7 @@ function Register() {
           <select name="role" className="form-input" value={formData.role} onChange={handleChange}>
             <option value="User">User</option>
             <option value="Organizer">Organizer</option>
+            <option value="Admin">Admin</option> {/* Only add this if intentional */}
           </select>
         </div>
         <button type="submit" className="button" style={{ width: "100%", marginTop: 18 }}>
