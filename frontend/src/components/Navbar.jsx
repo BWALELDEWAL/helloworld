@@ -26,10 +26,20 @@ const Navbar = () => {
           <>
             <span className="user-name">Welcome, {user.name}!</span>
             <Link to="/profile">Profile</Link>
-            {/* Only show "My Bookings" if NOT Organizer or Admin */}
-            {user.role !== "Organizer" && user.role !== "Admin" && (
+
+            {/* Show bookings only for Users */}
+            {user.role === "User" && (
               <Link to="/bookings">My Bookings</Link>
             )}
+
+            {/* Admin-specific links */}
+            {user.role === "Admin" && (
+              <>
+                <Link to="/admin/users">Admin Users</Link>
+                <Link to="/admin/events">Admin Events</Link>
+              </>
+            )}
+
             <button className="button" onClick={logout}>
               Logout
             </button>
