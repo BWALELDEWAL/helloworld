@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import "./App.css"
+import "./App.css";
 import Home from "./pages/EventList";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -10,10 +10,13 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import EventDetails from "./pages/EventDetails";
 import ForgotPassword from "./pages/ForgotPassword";
-import BookingDetails from "./pages/BookingDetails"; 
+import BookingDetails from "./pages/BookingDetails";
 import OrganizerDashboard from "./pages/OrganizerDashboard";
 import NewEvent from "./pages/NewEvent";
 import EventAnalyticsPage from "./pages/EventAnalyticsPage";
+import AdminUsersPage from "./pages/AdminUsersPage";
+import AdminEventsPage from "./pages/AdminEventsPage"; // ✅ added
+
 function App() {
   return (
     <>
@@ -72,6 +75,24 @@ function App() {
           element={
             <ProtectedRoute>
               <EventAnalyticsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Routes */}
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute roles={["Admin"]}>
+              <AdminUsersPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/events"
+          element={
+            <ProtectedRoute roles={["Admin"]}>
+              <AdminEventsPage />
             </ProtectedRoute>
           }
         />
