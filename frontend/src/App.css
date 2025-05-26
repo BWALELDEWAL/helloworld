@@ -198,7 +198,6 @@ body {
   text-align: center;
 }
 
-/* Add to App.css */
 .event-list-controls {
   display: flex;
   gap: 1rem;

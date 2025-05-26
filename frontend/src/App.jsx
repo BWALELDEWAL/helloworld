@@ -11,6 +11,9 @@ import Footer from "./components/Footer";
 import EventDetails from "./pages/EventDetails";
 import ForgotPassword from "./pages/ForgotPassword";
 import BookingDetails from "./pages/BookingDetails"; 
+import OrganizerDashboard from "./pages/OrganizerDashboard";
+import NewEvent from "./pages/NewEvent";
+import EventAnalyticsPage from "./pages/EventAnalyticsPage";
 function App() {
   return (
     <>
@@ -45,6 +48,30 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/organizer"
+          element={
+            <ProtectedRoute>
+              <OrganizerDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-events/new"
+          element={
+            <ProtectedRoute>
+              <NewEvent />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-events/analytics"
+          element={
+            <ProtectedRoute>
+              <EventAnalyticsPage />
             </ProtectedRoute>
           }
         />

@@ -9,7 +9,7 @@ const Navbar = () => {
       {/* Left: Logo */}
       <div>
         <Link
-          to="/"
+          to={user && user.role === "Organizer" ? "/organizer" : "/"}
           style={{
             fontWeight: 700,
             fontSize: '1.3rem',
@@ -26,7 +26,10 @@ const Navbar = () => {
           <>
             <span className="user-name">Welcome, {user.name}!</span>
             <Link to="/profile">Profile</Link>
-            <Link to="/bookings">My Bookings</Link>
+            {/* Only show "My Bookings" if NOT Organizer or Admin */}
+            {user.role !== "Organizer" && user.role !== "Admin" && (
+              <Link to="/bookings">My Bookings</Link>
+            )}
             <button className="button" onClick={logout}>
               Logout
             </button>
