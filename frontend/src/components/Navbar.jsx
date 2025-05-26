@@ -27,6 +27,12 @@ const Navbar = () => {
             <span className="user-name">Welcome, {user.name}!</span>
             <Link to="/profile">Profile</Link>
             <Link to="/bookings">My Bookings</Link>
+            {user.role === 'Admin' && (
+              <>
+                <Link to="/admin/users">Admin Panel</Link>
+                <Link to="/admin/events">Events</Link>
+              </>
+            )}
             <button className="button" onClick={logout}>
               Logout
             </button>
