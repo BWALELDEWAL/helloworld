@@ -197,3 +197,30 @@ body {
   margin-bottom: 14px;
   text-align: center;
 }
+
+/* Add to App.css */
+.event-list-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-search,
+.event-filter {
+  padding: 10px 14px;
+  border: 1.5px solid #b6c6e3;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f4f8fd;
+  transition: border 0.2s, box-shadow 0.2s;
+  min-width: 180px;
+}
+
+.event-search:focus,
+.event-filter:focus {
+  border-color: #1976d2;
+  outline: none;
+  box-shadow: 0 0 0 2px #1976d233;
+}
