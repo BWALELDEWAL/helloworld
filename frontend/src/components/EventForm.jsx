@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-const EventForm = ({ initialData = {}, onSubmit, onCancel }) => {
-  const [title, setTitle] = useState(initialData.title || "");
-  const [date, setDate] = useState(initialData.date ? initialData.date.slice(0, 16) : "");
-  const [location, setLocation] = useState(initialData.location || "");
-  const [totalTickets, setTotalTickets] = useState(initialData.totalTickets || "");
-  const [ticketPricing, setTicketPricing] = useState(initialData.ticketPricing || "");
-  const [description, setDescription] = useState(initialData.description || "");
-  const [category, setCategory] = useState(initialData.category || "");
+const EventForm = ({ accessRole }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [event, setEvent] = useState(null);
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
+  const [totalTickets, setTotalTickets] = useState("");
+  const [ticketPricing, setTicketPricing] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    // Optional: Check user role here if needed
+    // Fetch event data if editing
+    if (id) {
+      // Fetch event by ID and setEvent
+    }
+  }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,20 +29,20 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel }) => {
       return;
     }
     setError("");
-    onSubmit({
-      title,
-      date,
-      location,
-      totalTickets: Number(totalTickets),
-      ticketPricing: Number(ticketPricing),
-      description,
-      category,
-    });
+    // onSubmit({
+    //   title,
+    //   date,
+    //   location,
+    //   totalTickets: Number(totalTickets),
+    //   ticketPricing: Number(ticketPricing),
+    //   description,
+    //   category,
+    // });
   };
 
   return (
     <form className="form-container" onSubmit={handleSubmit}>
-      <h2 className="form-title">{initialData._id ? "Edit Event" : "Create Event"}</h2>
+      <h2 className="form-title">{id ? "Edit Event" : "Create Event"}</h2>
       {error && <div className="form-error">{error}</div>}
       <div className="form-group">
         <label>Title:</label>
@@ -110,13 +122,13 @@ const EventForm = ({ initialData = {}, onSubmit, onCancel }) => {
       </div>
       <div className="form-actions">
         <button type="submit" className="button" style={{ marginRight: 8 }}>
-          {initialData._id ? "Update Event" : "Create Event"}
+          {id ? "Update Event" : "Create Event"}
         </button>
-        {onCancel && (
+        {/* {onCancel && (
           <button type="button" className="button" onClick={onCancel} style={{ background: "#888" }}>
             Cancel
           </button>
-        )}
+        )} */}
       </div>
     </form>
   );
