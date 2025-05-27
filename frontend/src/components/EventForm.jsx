@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const EventForm = ({ accessRole }) => {
+const EventForm = ({ accessRole, onSubmit }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
@@ -29,15 +29,17 @@ const EventForm = ({ accessRole }) => {
       return;
     }
     setError("");
-    // onSubmit({
-    //   title,
-    //   date,
-    //   location,
-    //   totalTickets: Number(totalTickets),
-    //   ticketPricing: Number(ticketPricing),
-    //   description,
-    //   category,
-    // });
+    if (onSubmit) {
+      onSubmit({
+        title,
+        date,
+        location,
+        totalTickets: Number(totalTickets),
+        ticketPricing: Number(ticketPricing),
+        description,
+        category,
+      });
+    }
   };
 
   return (
