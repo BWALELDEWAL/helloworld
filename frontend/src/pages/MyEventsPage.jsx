@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import EventCard from "../components/EventCard";
 
 const MyEventsPage = () => {
@@ -10,51 +10,44 @@ const MyEventsPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  // Fetch events only if user is organizer
+  const fetchMyEvents = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get("http://localhost:5000/api/v1/users/events", {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (res.data.success) {
+        setEvents(res.data.events);
+      } else {
+        console.error("Failed to load events");
+      }
+    } catch (error) {
+      console.error("Failed to fetch events", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    if (!user || user.role !== "Organizer") {
+    if (!user) return;
+    if (user.role !== "Organizer") {
       navigate("/unauthorized");
       return;
     }
-
-    const fetchMyEvents = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/v1/users/events", {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        });
-
-        if (res.data.success) {
-          setEvents(res.data.events);
-        } else {
-          console.error("Failed to load events");
-        }
-      } catch (error) {
-        console.error("Failed to fetch events", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchMyEvents();
-  }, [user, navigate]);
+  }, [user, navigate, fetchMyEvents]);
 
-  const handleEdit = (eventId) => {
-    navigate(`/my-events/${eventId}/edit`);
-  };
+  const handleEdit = (eventId) => navigate(`/my-events/${eventId}/edit`);
 
   const handleDelete = async (eventId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this event?");
-    if (!confirmDelete) return;
-
+    if (!window.confirm("Are you sure you want to delete this event?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(
-        `http://localhost:5000/api/v1/events/${eventId}`,
-        {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        }
-      );
-      setEvents((prevEvents) => prevEvents.filter((e) => e._id !== eventId));
+      await axios.delete(`http://localhost:5000/api/v1/events/${eventId}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      setEvents((prev) => prev.filter((e) => e._id !== eventId));
     } catch (error) {
       console.error("Error deleting event:", error);
     }
@@ -68,9 +61,10 @@ const MyEventsPage = () => {
       {events.length === 0 ? (
         <p>
           No events created yet.{" "}
-          <a href="/my-events/new" style={{ color: "#007BFF" }}>
+          <Link to="/my-events/new" style={{ color: "#007BFF" }}>
             Create one
-          </a>.
+          </Link>
+          .
         </p>
       ) : (
         <div className="event-list">

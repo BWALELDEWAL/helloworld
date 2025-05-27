@@ -17,8 +17,8 @@ import NewEvent from "./pages/NewEvent";
 import EventAnalyticsPage from "./pages/EventAnalyticsPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminEventsPage from "./pages/AdminEventsPage";
-import MyEventsPage from "./pages/MyEventsPage"; // ✅ newly added
-import EventForm from "./components/EventForm";
+import MyEventsPage from "./pages/MyEventsPage";
+import EditEvent from "./pages/EditEvent"; // <-- import EditEvent
 
 function App() {
   return (
@@ -85,7 +85,7 @@ function App() {
           path="/my-events/:id/edit"
           element={
             <ProtectedRoute roles={["Organizer"]}>
-              <EventForm />
+              <EditEvent />
             </ProtectedRoute>
           }
         />
