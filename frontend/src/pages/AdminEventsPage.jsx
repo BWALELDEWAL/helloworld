@@ -18,7 +18,7 @@ const AdminEventsPage = () => {
         setError(err.response?.data?.message || "Failed to load events");
       }
     };
-
+/////////////////
     fetchEvents();
   }, []);
 
